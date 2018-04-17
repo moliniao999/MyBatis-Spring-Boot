@@ -60,6 +60,16 @@ public class CountryService {
         return countryMapper.selectByExample(example);
     }
 
+
+    public List<Country> list(Country country) {
+        if (country.getPage() != null && country.getRows() != null) {
+            PageHelper.startPage(country.getPage(), country.getRows());
+        }
+        return countryMapper.selectAll();
+    }
+
+
+
     public List<Country> getAllByWeekend(Country country) {
         if (country.getPage() != null && country.getRows() != null) {
             PageHelper.startPage(country.getPage(), country.getRows());
