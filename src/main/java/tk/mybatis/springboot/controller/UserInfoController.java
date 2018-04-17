@@ -27,14 +27,16 @@ package tk.mybatis.springboot.controller;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import tk.mybatis.springboot.mapper.AllotOrderRefMapper;
+import tk.mybatis.springboot.mapper.ChannelCustomTMapper;
+import tk.mybatis.springboot.model.AllotOrderRef;
+import tk.mybatis.springboot.model.ChannelCustomT;
 import tk.mybatis.springboot.model.UserInfo;
 import tk.mybatis.springboot.service.UserInfoService;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -47,6 +49,14 @@ public class UserInfoController {
 
     @Autowired
     private UserInfoService userInfoService;
+
+
+    @Resource
+    private AllotOrderRefMapper allotOrderRefMapper;
+
+
+    @Resource
+    private ChannelCustomTMapper channelCustomTMapper;
 
     @RequestMapping
     public PageInfo<UserInfo> getAll(UserInfo userInfo) {
@@ -83,4 +93,24 @@ public class UserInfoController {
         result.put("msg", msg);
         return result;
     }
+
+
+    @PostMapping("allotList")
+    public List<AllotOrderRef> allotList(AllotOrderRef req) {
+        List<AllotOrderRef> list = allotOrderRefMapper.select(req);
+
+
+        return list;
+    }
+
+
+    @PostMapping("channelList")
+    public List<ChannelCustomT> channelList(ChannelCustomT req) {
+        List<ChannelCustomT> list = channelCustomTMapper.selectAll();
+
+
+        return list;
+    }
+
+
 }
